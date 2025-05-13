@@ -3,7 +3,6 @@ package backend.ohgnoy.Entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 
 @Getter
@@ -28,7 +27,7 @@ public class Post {
     @Column(name = "excerpt", columnDefinition = "TEXT")
     private String excerpt;
 
-    @Column(name = "coverImage")
+    @Column(name = "cover_image")
     private String coverImage;
 
     @Column(name = "date", nullable = false)
@@ -38,9 +37,28 @@ public class Post {
     @JoinColumn(name = "author_id", nullable = false, referencedColumnName = "user_id")
     private User author;
 
-    @Column(name = "ogImage")
+    @Column(name = "og_image")
     private String ogImage;
 
     @Column(name = "view_cnt", nullable = false)
     private Integer viewCnt = 0;
+
+    // ERD 기반 확장 필드 추가 (예시로 필요한 것들)
+    @Column(name = "display_yn")
+    private Boolean displayYn = true;
+
+    @Column(name = "ip_addr", length = 20)
+    private String ipAddr;
+
+    @Column(name = "regist_date")
+    private LocalDateTime registDate;
+
+    @Column(name = "regist_uid")
+    private Integer registUid;
+
+    @Column(name = "modify_date")
+    private LocalDateTime modifyDate;
+
+    @Column(name = "modify_uid")
+    private Integer modifyUid;
 }

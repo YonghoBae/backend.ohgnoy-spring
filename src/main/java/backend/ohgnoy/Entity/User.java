@@ -3,34 +3,61 @@ package backend.ohgnoy.Entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 
 @Getter
-@Setter//원래는 엔티티를 만들 때 Setter 메서드를 사용하지 않음 -> 자유롭게 DB 데이터를 변경하는 것은 안전하지 않기 때문에
+@Setter
 @Entity
 @Table(
         name = "\"user\"",
         indexes = {
-                @Index(name = "email_unique",columnList = "email", unique = true)
+                @Index(name = "email_unique", columnList = "email", unique = true)
         }
 )
 public class User {
+
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY) //속성값이 자동 1씩 증가
-        @Column(name = "user_id", nullable =false, updatable = false)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "user_id", nullable = false, updatable = false)
         private Integer userId;
 
-        private String nickName;
+        @Column(name = "nickname")
+        private String nickname;
 
+        @Column(name = "email")
         private String email;
 
+        @Column(name = "password")
         private String password;
 
+        @Column(name = "summary")
         private String summary;
 
         @Column(name = "reg_date", nullable = false)
         private LocalDateTime regDate;
 
+        @Column(name = "edit_date")
         private LocalDateTime editDate;
+
+        // ERD 기반 추가 필드들
+        @Column(name = "telephone")
+        private String telephone;
+
+        @Column(name = "photo")
+        private String photo;
+
+        @Column(name = "last_ip")
+        private String lastIp;
+
+        @Column(name = "last_login_date")
+        private LocalDateTime lastLoginDate;
+
+        @Column(name = "emp_type_code_id")
+        private Integer empTypeCodeId;
+
+        @Column(name = "use_state_code_id")
+        private Integer useStateCodeId;
+
+        @Column(name = "delete_date")
+        private LocalDateTime deleteDate;
 }
