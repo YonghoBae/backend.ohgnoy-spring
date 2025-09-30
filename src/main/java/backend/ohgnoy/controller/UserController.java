@@ -27,10 +27,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponseDto<UserResponseDto>> loginUser(@RequestBody UserLoginRequestDto userLoginRequestDto){
-        UserResponseDto loggedInUser = userService.loginUser(userLoginRequestDto);
+    public ResponseEntity<ApiResponseDto<String>> loginUser(@RequestBody UserLoginRequestDto userLoginRequestDto){
+        String loggedInUser = userService.loginUser(userLoginRequestDto);
 
-        ApiResponseDto<UserResponseDto> response = new ApiResponseDto<>(
+        ApiResponseDto<String> response = new ApiResponseDto<>(
                 2000,
                 "User logged in successfully",
                 loggedInUser
