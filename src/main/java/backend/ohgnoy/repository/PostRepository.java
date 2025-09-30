@@ -1,6 +1,6 @@
-package backend.ohgnoy.Repository;
+package backend.ohgnoy.repository;
 
-import backend.ohgnoy.Entity.Post;
+import backend.ohgnoy.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PostRepository extends JpaRepository<Post,Integer> {

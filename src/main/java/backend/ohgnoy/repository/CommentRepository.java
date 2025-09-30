@@ -1,6 +1,6 @@
-package backend.ohgnoy.Repository;
+package backend.ohgnoy.repository;
 
-import backend.ohgnoy.Entity.Comment;
+import backend.ohgnoy.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CommentRepository extends JpaRepository<Comment,Integer> {

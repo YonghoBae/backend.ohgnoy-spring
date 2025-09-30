@@ -1,7 +1,7 @@
-package backend.ohgnoy;
+package backend.ohgnoy.repository;
 
-import backend.ohgnoy.Entity.User;
-import backend.ohgnoy.Repository.UserRepository;
+import backend.ohgnoy.entity.User;
+import backend.ohgnoy.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -26,7 +26,7 @@ public class UserRepositoryTest {
         Optional<User> ou = this.userRepository.findById(1);//User 타입의 값이 있을 수도 있고 없을 수도 있다는 걸 명시적으로 표현하는 클래스
         if(ou.isPresent()){
             User u = ou.get();
-            assertEquals("ohgnoy",u.getNickName());
+            assertEquals("ohgnoy",u.getNickname());
 
         }
     }
@@ -48,3 +48,8 @@ public class UserRepositoryTest {
 //        assertThat(userRepository.existsByEmail("ohgnoy@naver.com")).isTrue();
 //    }
 }
+
+//test 단게
+//1. given
+//2. when
+//3. then
