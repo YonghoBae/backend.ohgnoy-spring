@@ -3,17 +3,23 @@ package backend.ohgnoy.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebFluxSecurity
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
     // 이 메소드가 반환하는 PasswordEncoder 객체를 Spring 컨테이너가 Bean으로 관리
     // 이렇게 등록하면, 다른 클래스에서 @Autowired나 생성자 주입을 통해 이 객체를 가져다 쓸 수 있다.
     @Bean
@@ -46,7 +52,8 @@ public class SecurityConfig {
                                 "/user/register",       // 회원가입 API
                                 "/user/login",          // 로그인 API
                                 "/swagger-ui/**",       // Swagger UI 페이지 및 관련 리소스
-                                "/v3/api-docs/**"       // Swagger API 명세서(JSON)
+                                "/v3/api-docs/**",      // Swagger API 명세서(JSON)
+                                "/error"
                         )
                         // .permitAll(): 위에서 지정한 URL 경로에 대해서는 인증(로그인) 없이 모든 사용자의 접근을 허용합니다.
                         .permitAll()
@@ -54,7 +61,7 @@ public class SecurityConfig {
                         // .authenticated(): 나머지 모든 요청은 반드시 인증된 사용자만 접근할 수 있도록 요구합니다.
                         // 즉, 유효한 JWT를 헤더에 포함한 요청만 통과됩니다.
                         .anyRequest().authenticated()
-                );
+                ).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         //설정이 완료된 HttpSecurity 객체를 빌드하여 Security
         return http.build();

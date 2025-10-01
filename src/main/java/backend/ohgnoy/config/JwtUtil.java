@@ -78,7 +78,7 @@ public class JwtUtil {
                 .build()
                 // .parseClaimsJws(token): 토큰 문자열을 파싱하여 서명을 검증하고, Claims를 추출
                 // 만약 서명이 다르거나 토큰이 변조되었다면 여기서 예외가 발생
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)
                 // .getBody(): 파싱된 JWT의 Payload(Body) 부분, 즉 Claims 객체를 반환
                 .getBody();
     }
