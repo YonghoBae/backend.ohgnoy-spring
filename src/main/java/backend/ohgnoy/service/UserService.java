@@ -2,6 +2,7 @@ package backend.ohgnoy.service;
 
 import backend.ohgnoy.config.JwtUtil;
 import backend.ohgnoy.dto.UserLoginRequestDto;
+import backend.ohgnoy.dto.UserRegisterRequestDto;
 import backend.ohgnoy.dto.UserResponseDto;
 import backend.ohgnoy.entity.User;
 import backend.ohgnoy.exception.EmailAlreadyExistsException;
@@ -21,14 +22,16 @@ public class UserService {
     private final JwtUtil jwtUtil; // JwtUtil 주입
 
     // 회원가입
-    public UserResponseDto registerUser(User user) {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+    public UserResponseDto registerUser(UserRegisterRequestDto dto) {
+        if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new EmailAlreadyExistsException();
         }
 
-        // --- 비밀번호 암호화 로직 추가 ---
-        // 사용자가 입력한 비밀번호(평문)를 암호화하여 다시 설정
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User user = new User();
+        user.setEmail(dto.getEmail());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setNickname(dto.getNickname());
+        user.setRegDate(java.time.LocalDateTime.now());
         userRepository.save(user);
 
         return new UserResponseDto(user.getUserId(), user.getEmail(), user.getNickname());
