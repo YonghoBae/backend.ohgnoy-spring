@@ -29,9 +29,9 @@ dependencies {
 
 	// Spring Security & JWT 의존성
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 
 	// Swagger(springdoc) 의존성
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
@@ -46,6 +46,7 @@ dependencies {
 	testImplementation 'org.junit.jupiter:junit-jupiter'
 	implementation 'org.jboss.logging:jboss-logging:3.5.3.Final'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 
 	// 이메일 전송을 위한 starter
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
