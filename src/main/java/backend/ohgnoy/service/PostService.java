@@ -2,7 +2,6 @@ package backend.ohgnoy.service;
 
 import backend.ohgnoy.dto.PostModifyRequestDto;
 import backend.ohgnoy.dto.PostRequestDto;
-import backend.ohgnoy.dto.PostResponseDto;
 import backend.ohgnoy.entity.Post;
 import backend.ohgnoy.entity.User;
 import backend.ohgnoy.exception.PostNotFoundException;
@@ -47,11 +46,16 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public Post modifyPost(Integer postId, PostModifyRequestDto postModifyRequestDto){
+    public Post modifyPost(Integer postId, PostModifyRequestDto postModifyRequestDto, MultipartFile coverImage){
         Post post = postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
 
         post.setTitle(postModifyRequestDto.getTitle());
         post.setExcerpt(postModifyRequestDto.getExcerpt());
+
+        if(coverImage != null && !coverImage.isEmpty()) {
+            String imageUrl =  fileService.uploadFile(coverImage);
+            post.setCoverImage(imageUrl);
+        }
 
         return post;
     }

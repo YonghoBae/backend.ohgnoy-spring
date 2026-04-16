@@ -40,8 +40,10 @@ public class PostController {
     }
 
     @Operation(summary = "게시글 수정")
-    @PostMapping("/modify/{postId}")
-    public Post modifyPost(@PathVariable Integer postId, @RequestBody PostModifyRequestDto postModifyRequestDto) {
-        return postService.modifyPost(postId, postModifyRequestDto);
+    @PostMapping(value = "/modify/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Post modifyPost(@PathVariable Integer postId,
+                           @RequestPart("data") PostModifyRequestDto postModifyRequestDto,
+                           @RequestPart(value = "coverImage", required = false) MultipartFile coverImage) {
+        return postService.modifyPost(postId, postModifyRequestDto, coverImage);
     }
 }
