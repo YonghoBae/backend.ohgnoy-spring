@@ -13,7 +13,7 @@ public class ChatController {
     private final SimpMessageSendingOperations messagingTemplate;
 
     //클라이언트가 "/pub/chat/message" 로 메시지를 보내면 이 메서드가 가로챔
-    @MessageMapping("/chat/messgae")
+    @MessageMapping("/chat/message")
     public void message(ChatMessageDto message) {
         // 입장/퇴장 메시지 세팅
         if(ChatMessageDto.MessageType.ENTER.equals(message.getType())) {
@@ -23,6 +23,6 @@ public class ChatController {
         }
 
         //해당 채팅방(roomId)을 구독 중인 클라이언트들에게 메세지 브로드캐스트
-        messagingTemplate.convertAndSend("/sub/chat/room" + message.getRoomId());
+        messagingTemplate.convertAndSend("/sub/chat/room" + message.getRoomId(), message);
     }
 }
