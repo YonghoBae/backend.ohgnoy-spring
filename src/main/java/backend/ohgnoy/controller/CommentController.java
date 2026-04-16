@@ -34,22 +34,20 @@ public class CommentController {
         return ResponseEntity.ok(response);
     }
 
-    /* * TODO: CommentService에 createComment 로직을 추가한 뒤 주석을 해제하고 연결해 보세요!
-     */
-    // @Operation(summary = "댓글 작성")
-    // @PostMapping("/create/{postId}")
-    // public ResponseEntity<ApiResponseDto<Comment>> createComment(
-    //         @PathVariable Integer postId,
-    //         @RequestBody CommentCreateRequestDto dto,
-    //         @AuthenticationPrincipal User user) {
-    //
-    //     Comment createdComment = commentService.createComment(postId, dto, user);
-    //
-    //     ApiResponseDto<Comment> response = new ApiResponseDto<>(
-    //             2000,
-    //             "Comment created successfully",
-    //             createdComment
-    //     );
-    //     return ResponseEntity.ok(response);
-    // }
+     @Operation(summary = "댓글 작성")
+     @PostMapping("/create/{postId}")
+     public ResponseEntity<ApiResponseDto<Comment>> createComment(
+             @PathVariable Integer postId,
+             @RequestBody CommentCreateRequestDto dto,
+             @AuthenticationPrincipal User user) {
+
+         Comment createdComment = commentService.createComment(postId, dto, user);
+
+         ApiResponseDto<Comment> response = new ApiResponseDto<>(
+                 2000,
+                 "Comment created successfully",
+                 createdComment
+         );
+         return ResponseEntity.ok(response);
+     }
 }

@@ -1,6 +1,9 @@
 package backend.ohgnoy.service;
 
+import backend.ohgnoy.dto.CommentCreateRequestDto;
 import backend.ohgnoy.entity.Comment;
+import backend.ohgnoy.entity.Post;
+import backend.ohgnoy.entity.User;
 import backend.ohgnoy.repository.CommentRepository;
 import backend.ohgnoy.repository.PostRepository;
 import backend.ohgnoy.repository.UserRepository;
@@ -31,4 +34,17 @@ public class CommentService {
         //CommentRepository에 findByPost_PostId 메소드를 추가
         return commentRepository.findById(postId).orElse(null);
     }
+
+    @Transactional
+    public Comment createComment(Integer postId, CommentCreateRequestDto dto, User user) {
+        Post post = postRepository.findById(postId).orElseThrow(()->new IllegalArgumentException("Post not found"));
+
+        Comment comment = new Comment();
+        comment.setPost(post);
+        comment.setAuthor(user);
+        comment.setContent(dto.getContent());
+
+        return commentRepository.save(comment);
+    }
+
 }
