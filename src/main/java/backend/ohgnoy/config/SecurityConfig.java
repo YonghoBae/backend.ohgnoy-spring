@@ -12,6 +12,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -34,6 +39,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         //HttpSecurity 객체를 사용하여 HTTP 요청에 대한 보안 규칙을 연쇄적으로 설정
         http
+                .cors(cors->cors.configurationSource(corsConfigurationSource()))
                 // .csrf(): Cross-Site Request Forgery(사이트 간 요청 위조) 공격을 방어하는 기능입니다.
                 // .disable(): 하지만 JWT 기반의 stateless API에서는 서버에 세션 상태를 저장하지 않으므로,
                 // CSRF 토큰을 검증할 필요가 없습니다. 따라서 이 기능을 비활성화합니다.
@@ -65,5 +71,18 @@ public class SecurityConfig {
 
         //설정이 완료된 HttpSecurity 객체를 빌드하여 Security
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("https://ohgnoy.wolyong.cloud"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }
