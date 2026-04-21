@@ -1,4 +1,16 @@
 services:
+  ohgnoy_spring:
+    build: .
+    container_name: ohgnoy_api
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    networks:
+      - web_network
+      - internal_db_network
+    restart: unless-stopped
+
   postgres:
     image: postgres:16
     container_name: ohgnoy-postgres
@@ -6,10 +18,17 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - internal_db_network
+    restart: unless-stopped
 
 volumes:
   postgres_data:
+
+networks:
+  web_network:
+    external: true
+  internal_db_network:
+    internal: true
