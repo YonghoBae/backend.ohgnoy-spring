@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
         // 에러 응답 DTO 생성 (코드와 메시지 전달)
         ErrorResponseDto errorResponse = new ErrorResponseDto(errorCode.getCode(), errorCode.getMessage());
 
-        // HTTP 상태 코드 409(CONFLICT)와 함께 에러 응답 반환
-        return ResponseEntity.status(409).body(errorResponse);
+        // HTTP 상태 코드를 ErrorCode에 설정된 값으로 반환
+        return ResponseEntity.status(errorCode.getStatus()).body(errorResponse);
     }
 }
