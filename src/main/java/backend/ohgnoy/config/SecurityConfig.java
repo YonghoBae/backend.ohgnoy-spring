@@ -55,12 +55,16 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // .requestMatchers(...): 특정 URL 패턴을 지정합니다.
                         .requestMatchers(
-                                "/user/register",       // 회원가입 API
-                                "/user/login",          // 로그인 API
-                                "/swagger-ui/**",       // Swagger UI 페이지 및 관련 리소스
-                                "/v3/api-docs/**",      // Swagger API 명세서(JSON)
+                                "/user/register",
+                                "/user/login",
+                                "/user/email/**",
+                                "/email/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
                                 "/error"
                         )
+                        .permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**")
                         // .permitAll(): 위에서 지정한 URL 경로에 대해서는 인증(로그인) 없이 모든 사용자의 접근을 허용합니다.
                         .permitAll()
                         // .anyRequest(): 위에서 설정한 경로 외의 모든 나머지 요청을 의미합니다.
@@ -76,7 +80,12 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("https://ohgnoy.wolyong.cloud"));
+        config.setAllowedOrigins(List.of(
+                "https://ohgnoy.vercel.app",
+                "http://localhost:3000",
+                "http://localhost:5173",
+                "http://localhost:8080"
+        ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
