@@ -36,15 +36,21 @@ public class JwtUtil {
      * 이메일(sub), userId, nickname 정보를 포함
      */
     public String generateToken(User user) {
-        //JWT의 Payload 부분에 담을 추가 정보(Custom Claims)를 Map 형태로 구성
-        //이 정보들은 나중에 토큰을 해석하여 바로 꺼내 쓸 수 있어 유리
-        Map<String, Object> claims = Map.of(
-                "userId", user.getUserId(),
-                "nickname", user.getNickname()
-        );
+        // Map.of는 null 값을 허용하지 않으므로, 보다 안전한 데이터 처리를 위해 HashMap 사용 고려
+        // 혹은 null 체크를 통해 기본값 설정
+        String nickname = (user.getNickname() != null) ? user.getNickname() : "";
+        Integer userId = (user.getUserId() != null) ? user.getUserId() : 0;
+
+        Map<String, Object> claims = new java.util.HashMap<>();
+        claims.put("userId", userId);
+        claims.put("nickname", nickname);
 
         Date now = new Date(); //현재 시간 나타내는 Date 객체 생성
         Date expiration = new Date(now.getTime() + EXPIRATION_TIME); //현재 시간에 유효 시간을 더해서 만료 시간 계산
+
+        if (secretKey == null) {
+            throw new RuntimeException("JWT Secret Key is not configured. Please check your environment variables or properties.");
+        }
 
         // Jwts.builder()를 사용하여 JWT 생성 및 반환
         return Jwts.builder()
