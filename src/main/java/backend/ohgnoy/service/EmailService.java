@@ -11,7 +11,7 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class EmailService {
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
     @Value("${spring.mail.username}")
     private String senderEmail;

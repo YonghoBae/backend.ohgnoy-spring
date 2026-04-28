@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Tag(name = "Email", description = "이메일 인증 API")
 @RestController
-@RequestMapping("/email")
+@RequestMapping("/user/email")
 @RequiredArgsConstructor
 public class EmailController {
     private final EmailService emailService;
