@@ -55,9 +55,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // .requestMatchers(...): 특정 URL 패턴을 지정합니다.
                         .requestMatchers(
-                                "/user/register",
-                                "/user/login",
-                                "/user/email/**",
+                                "/users",
+                                "/users/login",
+                                "/users/email/**",
                                 "/email/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",

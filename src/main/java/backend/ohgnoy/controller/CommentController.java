@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Comment", description = "댓글 관련 API")
 @RestController
-@RequestMapping("/comment")
+@RequestMapping("/posts")
 @RequiredArgsConstructor
 public class CommentController {
 
     private final CommentService commentService;
 
     @Operation(summary = "게시글의 댓글 조회")
-    @GetMapping("/{postId}")
+    @GetMapping("/{postId}/comments")
     public ResponseEntity<ApiResponseDto<Comment>> getComment(@PathVariable Integer postId) {
         // 기존 CommentService에 작성하신 getComment 메소드 활용
         Comment comment = commentService.getComment(postId);
@@ -35,7 +35,7 @@ public class CommentController {
     }
 
      @Operation(summary = "댓글 작성")
-     @PostMapping("/create/{postId}")
+     @PostMapping("/{postId}/comments")
      public ResponseEntity<ApiResponseDto<Comment>> createComment(
              @PathVariable Integer postId,
              @RequestBody CommentCreateRequestDto dto,

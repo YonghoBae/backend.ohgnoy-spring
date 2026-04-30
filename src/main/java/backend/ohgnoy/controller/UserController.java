@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "User", description = "사용자 관련 API")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @Operation(summary = "회원가입")
-    @PostMapping("/register")
+    @PostMapping("")
     public ResponseEntity<UserResponseDto> registerUser(@RequestBody UserRegisterRequestDto dto){
         UserResponseDto registeredUser = userService.registerUser(dto);
         return ResponseEntity.ok(registeredUser);

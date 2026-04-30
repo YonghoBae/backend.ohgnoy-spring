@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Like", description = "게시글 좋아요 API")
 @RestController
-@RequestMapping("/like")
+@RequestMapping("/posts")
 @RequiredArgsConstructor
 public class LikeController {
 
     private final LikeService likeService;
 
     @Operation(summary = "게시글 좋아요 토글 (추가/취소)")
-    @PostMapping("/{postId}")
+    @PostMapping("/{postId}/likes")
     public ResponseEntity<ApiResponseDto<String>> toggleLike(
             @PathVariable Integer postId,
             @AuthenticationPrincipal User user) {

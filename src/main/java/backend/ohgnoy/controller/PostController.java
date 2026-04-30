@@ -16,7 +16,7 @@ import java.util.List;
 
 @Tag(name = "Post", description = "게시글 관련 API")
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/posts")
 public class PostController {
 
     private final PostService postService;
@@ -26,21 +26,21 @@ public class PostController {
     }
 
     @Operation(summary = "게시글 목록 조회")
-    @GetMapping("/list")
+    @GetMapping("")
     public List<Post> listPosts() {
         return postService.getAllPosts();
     }
 
     @Operation(summary = "게시글 생성")
     // consumes를 통해 multipart/form-data를 받겠다고 명시한다
-    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Post createPost(@RequestPart("data") PostRequestDto postRequestDto,
                            @RequestPart(value = "coverImage", required = false) MultipartFile coverImage, @AuthenticationPrincipal User user) {
         return postService.createPost(postRequestDto, user, coverImage);
     }
 
     @Operation(summary = "게시글 수정")
-    @PostMapping(value = "/modify/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Post modifyPost(@PathVariable Integer postId,
                            @RequestPart("data") PostModifyRequestDto postModifyRequestDto,
                            @RequestPart(value = "coverImage", required = false) MultipartFile coverImage) {
